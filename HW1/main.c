@@ -15,7 +15,6 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
 
 int main(void){
     int upper = 100;      /* Upper bound of guesses */
@@ -33,8 +32,7 @@ int main(void){
 
     /* Loop until the number is found */
     while(isFound == 0){
-        /* Calculate next guess as midpoint between upper and lower
-         * bound */
+        /* Calculate next guess as midpoint between upper and lower bound */
         nextGuess = (upper + lower) / 2;
         printf("Is your number %d?\n", nextGuess);
 
@@ -63,7 +61,7 @@ int main(void){
             printf("Invalid response!\n");
             break;
         }
-    }
+	}
 
     printf("Thank you for playing\n");
     return 0;
