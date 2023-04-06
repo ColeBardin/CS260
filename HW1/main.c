@@ -28,7 +28,7 @@ int main(void){
     printf("Responses:\n");
     printf("h or H means Higher\n");
     printf("l or L means Lower\n");
-    printf("y or Y means yes this number is correct\n");
+    printf("y or Y means yes this is the correct number\n");
 
     /* Loop until the number is found */
     while(isFound == 0){
@@ -63,6 +63,6 @@ int main(void){
         }
 	}
 
-    printf("Thank you for playing\n");
+    printf("Thank you for playing.\n");
     return 0;
 }
