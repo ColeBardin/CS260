@@ -1,8 +1,0 @@
-CS260 Notes
-
-
-Binary Search
-Use target, array, start, stop
-if start > stop, bad inputs, do not search
-
-Analysis of Algorithms
