@@ -19,7 +19,7 @@
 /* Implement this function based on lecture */
 void bubbleSort(int *A, int size) {
 	unsigned int index; /* Variable to index the array */
-	uint8_t swapped = 1; /* Flag for if a swap occurs */
+	int swapped = 1; /* Flag for if a swap occurs */
 	
 	while(swapped == 1){ 
 		/* Unset swapped flag for this sort iteration */
@@ -125,26 +125,48 @@ void quickSort(int *A, int size) {
 
 /* Implement this function based on lecture */
 void qusort(int *A, int start, int stop) {
-	if(start >= stop) {
-		return;
+	int p;
+	if(start < stop){
+		p = partition(A, start, stop);
+		qusort(A, start, p - 1);
+		qusort(A, p + 1, stop);
 	}
-	int p = partition(A, start, stop);
-	qusort(A, start, p-1);
-	qusort(A, p, stop);
 	return;
 }
 
 /* Implement this function based on lecture */
-int partition(int *A, int start, int stop) { return 0; }
+int partition(int *A, int start, int stop) { 
+	int randomIndex;
+	int pivot;
+	int i = start;
+	int j;
+
+	/* Generate random index within range start and stop, inclusive */
+	randomIndex = (rand() / RAND_MAX) * (start - stop + 1) + start;
+	/* Swap random element with last element */
+	swap(A, randomIndex, stop);
+	/* Set random element as pivot */
+	pivot = A[stop];
+
+	for(j = start; j < stop; j++){
+		if(A[j] <= pivot){
+			swap(A, i, j);
+			i++;
+		}
+	}
+	swap(A, i, stop);
+	return i;
+}
 
 /* Swap element method */
 void swap(int *A, int indexA, int indexB) {
-	A[indexB] += A[indexA];
-	A[indexA] = A[indexB] - A[indexA];
-	A[indexB] -= A[indexA];
+	int temp = A[indexA];
+	A[indexA] = A[indexB];
+	A[indexB] = temp;
 	return;
 }
 
+/* Copy array method */
 int *arrayCopy(int *A, int start, int stop) {
 	int length;
 	int *copied;
