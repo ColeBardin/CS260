@@ -81,13 +81,19 @@ void merge(int *A, int start, int middle, int stop) {
 	int sizeFirst = middle - start + 1;	/* Size of first array */
 	int sizeSecond = stop - middle; /* Size of second array */
 
-	int *first = arrayCopy(A, start, middle); /* Copy of first half of source array */
-	int *second = arrayCopy(A, middle + 1, stop); /* Copy of second half of source array */
+	int first[sizeFirst];
+	int second[sizeSecond];
 
 	int k; /* Index for source array */
 	int i = 0; /* Index for first array */
 	int j = 0; /* Index for second array */
 
+    for(k = start; k <= middle; k++){
+        first[k - start] = A[k];
+    }
+    for(k = middle + 1; k <= stop; k++){
+        second[k - middle - 1] = A[k];
+    }
 	/* Merging */
 	for(k = start; k <= stop; k++){
 		/* Options: */
@@ -110,9 +116,6 @@ void merge(int *A, int start, int middle, int stop) {
 			j++;
 		}
 	}
-	/* Free memory of copied arrays */
-	free(first);
-	free(second);
 	
 	return;
 }
@@ -172,7 +175,7 @@ int *arrayCopy(int *A, int start, int stop) {
 	int *copied;
 	int index;
 	
-	/* Error handle input indices, if start == stop, then only copy 1 element */
+	/* Error handle input indices */
 	if (stop < start) {
 		return NULL;
 	}
