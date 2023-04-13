@@ -88,4 +88,13 @@ void qusort(int *A, int start, int stop);
  */
 int partition(int *A, int start, int stop);
 
+/*
+		Swaps two elements in the array
+		@param A is the array to swap two elements in
+		@param indexA is the index of the first element
+		@param indexB is the index of the second element
+*/
+void swap(int *A, int indexA, int indexB);
+int *arrayCpy(int *A, int start, int stop);
+
 #endif
