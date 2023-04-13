@@ -39,7 +39,21 @@ void bubbleSort(int *A, int size) {
 }
 
 /* Implement this function based on lecture */
-void insertSort(int *A, int size) { return; }
+void insertSort(int *A, int size) { 
+	int i=1;
+	int j;
+
+	while(i < size){
+		j=i;
+		while((j > 0) && (A[j-1] > A[j])){
+			swap(A, j - 1, j);
+			j -= 1;
+		}
+		i++;
+	}
+
+	return;
+}
 
 /* Implement this function based on lecture */
 void mergeSort(int *A, int size) { 
@@ -67,8 +81,8 @@ void merge(int *A, int start, int middle, int stop) {
 	int sizeFirst = middle - start + 1;	/* Size of first array */
 	int sizeSecond = stop - middle; /* Size of second array */
 
-	int *first = arrayCpy(A, start, middle); /* Copy of first half of source array */
-	int *second = arrayCpy(A, middle + 1, stop); /* Copy of second half of source array */
+	int *first = arrayCopy(A, start, middle); /* Copy of first half of source array */
+	int *second = arrayCopy(A, middle + 1, stop); /* Copy of second half of source array */
 
 	int k; /* Index for source array */
 	int i = 0; /* Index for first array */
@@ -131,7 +145,7 @@ void swap(int *A, int indexA, int indexB) {
 	return;
 }
 
-int *arrayCpy(int *A, int start, int stop) {
+int *arrayCopy(int *A, int start, int stop) {
 	int length;
 	int *copied;
 	int index;
