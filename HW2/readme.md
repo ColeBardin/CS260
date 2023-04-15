@@ -62,6 +62,8 @@ All Times in milliseconds.
 
 |    Size |     Bubble |     Insert |      Merge |      Quick |
 
+| --- | --- | --- | --- | --- |
+
 |       8 |     0.0000 |     0.0000 |     0.0000 |     0.0000 |
 
 |      16 |     0.0000 |     0.0000 |     0.0000 |     0.0000 |
