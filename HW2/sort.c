@@ -40,8 +40,8 @@ void bubbleSort(int *A, int size) {
 
 /* Implement this function based on lecture */
 void insertSort(int *A, int size) { 
-	int i=1;
-	int j;
+	int i=1; /* Index to restrict already sorted indices */
+	int j; /* Index of insert element */
 
 	while(i < size){
 		j=i;
@@ -62,12 +62,14 @@ void mergeSort(int *A, int size) {
 
 /* Implement this function based on lecture */
 void msort(int *A, int start, int stop) {
-	int middle;
+	int middle; /* Index of middle element */
 
 	/* Return if start stop indices are invalid */
 	if(start >= stop){
 		return;
 	}
+
+	/* Split array to perform merge sorting */
 	middle = start + (stop-start) / 2;
 	msort(A, start, middle);
 	msort(A, middle + 1, stop);
@@ -81,19 +83,22 @@ void merge(int *A, int start, int middle, int stop) {
 	int sizeFirst = middle - start + 1;	/* Size of first array */
 	int sizeSecond = stop - middle; /* Size of second array */
 
-	int first[sizeFirst];
-	int second[sizeSecond];
+	int first[sizeFirst]; /* Array to hold copy of first half of source array */
+	int second[sizeSecond]; /* Array to hold copy of second half of source array */
 
 	int k; /* Index for source array */
 	int i = 0; /* Index for first array */
 	int j = 0; /* Index for second array */
 
+	/* Copy first half of source array */
     for(k = start; k <= middle; k++){
         first[k - start] = A[k];
     }
+	/* Copy second half of source array */
     for(k = middle + 1; k <= stop; k++){
         second[k - middle - 1] = A[k];
     }
+
 	/* Merging */
 	for(k = start; k <= stop; k++){
 		/* Options: */
@@ -105,7 +110,7 @@ void merge(int *A, int start, int middle, int stop) {
 			/* Nothing is left in second array */
 			A[k] = first[i];
 			i++;
-		}else if(first[i] < second[j]) {
+		}else if(first[i] < second[j]){
 			/* Element in first array is less than second */
 			A[k] = first[i];
 			i++;			
@@ -128,7 +133,8 @@ void quickSort(int *A, int size) {
 
 /* Implement this function based on lecture */
 void qusort(int *A, int start, int stop) {
-	int p;
+	int p; /* Partition index value */
+
 	if(start < stop){
 		p = partition(A, start, stop);
 		qusort(A, start, p - 1);
@@ -139,10 +145,10 @@ void qusort(int *A, int start, int stop) {
 
 /* Implement this function based on lecture */
 int partition(int *A, int start, int stop) { 
-	int randomIndex;
-	int pivot;
-	int i = start;
-	int j;
+	int randomIndex; /* Variable for random index selection */
+	int pivot; /* Pivot value chosen by random index */
+	int i = start; /* Keeps track of partition index */
+	int j; /* Index used to compare values to pivot */
 
 	/* Generate random index within range start and stop, inclusive */
 	randomIndex = (rand() / RAND_MAX) * (start - stop + 1) + start;
@@ -169,30 +175,3 @@ void swap(int *A, int indexA, int indexB) {
 	return;
 }
 
-/* Copy array method */
-int *arrayCopy(int *A, int start, int stop) {
-	int length;
-	int *copied;
-	int index;
-	
-	/* Error handle input indices */
-	if (stop < start) {
-		return NULL;
-	}
-
-	/* Calculate length of  array to copy */
-	length = stop - start + 1;
-	copied = (int *)malloc(length * sizeof(int));
-	/* Error handle malloc call */
-	if (copied == NULL) {
-		return NULL;
-	}
-	
-	/* Copy array values into new array */
-	for (index = 0; index <= length; index++) {
-		copied[index] = A[start + index];
-	}
-
-	/* Return copied array pointer */
-	return copied;	
-}

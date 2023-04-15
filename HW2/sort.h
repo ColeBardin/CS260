@@ -96,13 +96,4 @@ int partition(int *A, int start, int stop);
 */
 void swap(int *A, int indexA, int indexB);
 
-/*
-		Creates a copy of the array from the start and stop points
-		@param A is the source array to copy from
-		@param start is an index in the source array to copy from
-		@param stop is an index in the source array to copy to
-		@return Pointer to dynamically allocated array with copied values
-*/
-int *arrayCopy(int *A, int start, int stop);
-
 #endif
