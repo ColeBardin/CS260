@@ -27,7 +27,7 @@ void enqueue(int v, Queue *Q) {
     /* Allocate dynamic memory for a new Node*/
     Node *new = malloc(sizeof(Node));
     /* Return if malloc fails */
-    if(new == NULL) {
+    if(new == NULL){
         return;
     }
     /* Populte new Node with data */
@@ -63,8 +63,17 @@ void dequeue(Queue *Q) {
     }else{
         /* Else, remove first element */
         Node *toDelete = Q->head;
-        /* Update head to be second element */
-        Q->head = toDelete->next;
+		
+		/* Check if element is only Node in Queue */
+		if(toDelete->next == NULL){
+			/* Update head to be second element */
+			Q->head = toDelete->next;
+		}else{
+			/* If element was only NODE in Queue, make HEAD and TAIL NULL */
+			Q->head = NULL;
+			Q->tail = NULL;
+		}
+
         /* Free first element's memory */
         free(toDelete);
         return;
@@ -79,14 +88,14 @@ void printQueue(Queue *Q) {
         int index = 0; /* Index for counting Nodes */
         Node *curr = Q->head; /* Current Node pointer, starts at HEAD */
         while(curr != NULL){
-            /* Print out each element and its value */
+            /* Print out value of Node */
             printf("Node: %d\tValue: %d\n", index++, curr->value);
-            /* Iterate to next element */
+            /* Iterate to next Node */
             curr = curr->next;
         }
     }
 }
 
 void josephus(int n, int m) {
-
+	
 }
