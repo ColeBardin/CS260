@@ -48,3 +48,23 @@ If statements WEC count all lines inside
 Since bubble runtime WEC is O(size) needs to be run size times in WEC
 
 Therefore O(size^2)
+
+## Hash Tables
+
+Using strings as indices of an array
+
+### Hash Function
+
+`hash(v, n)`
+
+v: arbitrary index
+
+n: size of the array
+
+Maps arbitrary value to index of the array
+
+For example, for integer values of v, return v % n for mapping
+
+For values with the same v % n result, we can implement queues/linked list to populate the cells
+
+Collision: when two vals are supposed to go to the same place in the array 
