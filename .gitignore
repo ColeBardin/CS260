@@ -1,4 +1,5 @@
 # Mac Stuff
 .DS_Store
 
+# Windows Executables 
 *.exe
