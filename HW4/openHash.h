@@ -54,5 +54,3 @@ bool member(char* word, OpenHash* table);
 	@param table is the Hash Table to search
 */
 void insertOpenHash(char* word, OpenHash* table);
-
-void printOpenHash(OpenHash *table);

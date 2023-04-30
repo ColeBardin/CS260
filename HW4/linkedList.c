@@ -13,62 +13,104 @@
 
 
 LinkedList *newLinkedList() {
+    /* Allocate memory for new linked list */
     LinkedList *list = malloc(sizeof(LinkedList));
+    /* By definition, empty list has null head and tail */
     list->head = NULL;
     list->tail = NULL;
     return list;
 }
 
 void deleteLinkedList(LinkedList *list) {
-    Node *currentNode = list->head;
-    Node *nextNode;
+    Node *currentNode; /* Pointer to keep track of current Node */
+    Node *nextNode; /* Pointer to keep track of next Node */
 
+    /* Start at list head */
+    currentNode = list->head;
+
+    /* Iterate through each element of the list */
     while(currentNode != NULL){
+        /* Store next element */
         nextNode = currentNode->next;
+        /* Free current node */
         free(currentNode);
+        /* Advance to next node*/
         currentNode = nextNode;
     }
 
+    /* Free memory for the list after all elements are freed */
     free(list);
 }
 
 void insert(char *word, LinkedList *list) {
+    /* Allocate memory for new Node */
     Node *node = malloc(sizeof(Node));
+    /* Allocate memory for word contents */
     node->word = malloc(strlen(word) + 1);
+    /* Copy word contents to new allocation */
     strcpy(node->word, word);
+    /* Make new node not point to anything */
     node->next = NULL;
 
     if(list->tail == NULL){
-        list->tail = node;
+        /* If list is currently empty, set new node as head */
         list->head = node;
     }else{
+        /* If not empty, add node after tail */
         list->tail->next = node;
-        list->tail = node;
     }
+    /* Update tail pointer */
+    list->tail = node;
 }
 
 bool contains(char *word, LinkedList *list) {
+    /* Start search at head of list */
     Node *currentNode = list->head;
 
+    /* Iterate through each element */
     while(currentNode != NULL){
+        /* If current element matches with word */
         if(!strcmp(currentNode->word, word)){
             return true;
         }else{
+            /* If no match, advance to next element */
             currentNode = currentNode->next;
         }
     }
+    /* If no matches were found, list does not contain element */
     return false;
 }
 
 void printList(LinkedList *list) {
+    /* Handle empty list being passed */
     if(list->head == NULL){
         printf("Empty List\n");
     }else{
+        /* Iterate through all elements in list */
         Node *currentNode = list->head;
-
         while(currentNode != NULL){
+            /* Print out their word */
             printf("[\"%s\"]\n", currentNode->word);
             currentNode = currentNode->next;
         }
     }
+}
+
+int lengthLinkedList(LinkedList *list) {
+    int count = 0; /* Element counter variable */
+    
+    /* Handle invalid pointer being passed */
+    if(list == NULL){
+        return -1;
+    }
+
+    /* Iterate through each Node */
+    Node *node = list->head;
+    while(node != NULL){
+        /* Count each non-NULL node */
+        node = node->next;
+        count++;
+    }
+
+    return count;
 }
