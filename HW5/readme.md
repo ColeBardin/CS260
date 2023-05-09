@@ -1,4 +1,6 @@
- Homework 5
+# CS260-001: Homework 5
+
+By Cole Bardin : CAB572
 
 ## Part 2: Height Experiment
 
@@ -76,3 +78,6 @@
 |     256 |      14 |      15 |      18 |      18 |      17 |   16.40 |
 |     512 |      18 |      18 |      19 |      19 |      18 |   18.40 |
 |    1024 |      23 |      18 |      20 |      23 |      20 |   20.80 |
+
+### Approximation
+
