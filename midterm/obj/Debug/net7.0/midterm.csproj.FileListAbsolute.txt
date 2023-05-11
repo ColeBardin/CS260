@@ -1,0 +1,15 @@
+/Users/colebardin/Projects/CS260/midterm/obj/Debug/net7.0/midterm.csproj.AssemblyReference.cache
+/Users/colebardin/Projects/CS260/midterm/obj/Debug/net7.0/midterm.GeneratedMSBuildEditorConfig.editorconfig
+/Users/colebardin/Projects/CS260/midterm/obj/Debug/net7.0/midterm.AssemblyInfoInputs.cache
+/Users/colebardin/Projects/CS260/midterm/obj/Debug/net7.0/midterm.AssemblyInfo.cs
+/Users/colebardin/Projects/CS260/midterm/obj/Debug/net7.0/midterm.csproj.CoreCompileInputs.cache
+/Users/colebardin/Projects/CS260/midterm/bin/Debug/net7.0/midterm
+/Users/colebardin/Projects/CS260/midterm/bin/Debug/net7.0/midterm.deps.json
+/Users/colebardin/Projects/CS260/midterm/bin/Debug/net7.0/midterm.runtimeconfig.json
+/Users/colebardin/Projects/CS260/midterm/bin/Debug/net7.0/midterm.dll
+/Users/colebardin/Projects/CS260/midterm/bin/Debug/net7.0/midterm.pdb
+/Users/colebardin/Projects/CS260/midterm/obj/Debug/net7.0/midterm.dll
+/Users/colebardin/Projects/CS260/midterm/obj/Debug/net7.0/refint/midterm.dll
+/Users/colebardin/Projects/CS260/midterm/obj/Debug/net7.0/midterm.pdb
+/Users/colebardin/Projects/CS260/midterm/obj/Debug/net7.0/midterm.genruntimeconfig.cache
+/Users/colebardin/Projects/CS260/midterm/obj/Debug/net7.0/ref/midterm.dll
