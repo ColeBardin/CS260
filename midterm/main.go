@@ -8,21 +8,21 @@ import (
 )
 
 /*
-3: 0.000 ms
-4: 0.000 ms
-5: 0.000 ms
-6: 0.000 ms
-7: 0.000 ms
-8: 0.501 ms
-9: 0.000 ms
-10: 0.000 ms
-11: 0.497 ms
-12: 1.000 ms
-13: 4.500 ms
-14: 11.000 ms
-15: 80.612 ms
-16: 725.197 ms
-17: 775.202 ms
+3: 0.001 ms
+4: 0.001 ms
+5: 0.001 ms
+6: 0.003 ms
+7: 0.032 ms
+8: 0.023 ms
+9: 0.065 ms
+10: 0.220 ms
+11: 0.839 ms
+12: 4.536 ms
+13: 45.968 ms
+14: 45.989 ms
+15: 298.071 ms
+16: 557.660 ms
+17: 1480.923 ms
 */
 func main() {
 	/* Repeat for N = 3 to 17 */
@@ -33,7 +33,7 @@ func main() {
 		/* Start the timer */
 		start := time.Now()
 		/* Implement quicksort algorithm */
-		quickSort(arr, 0, len(arr)-1)
+		quickSort(arr)
 		/* Stop the timer */
 		elapsed := time.Since(start)
 
@@ -42,34 +42,56 @@ func main() {
 	}
 }
 
-// Generates an array of unique random values
+/**
+ @brief Creates an array of random values
+ @param size length of the array
+ @return []int Array of random elements
+*/
 func generateRandomArray(size int) []int {
+	/* Create empty array of length size */
 	arr := make([]int, size)
-	for i := 0; i < size; i++ {
-		arr[i] = i + 1
-	}
 
-	// Shuffle the array using Fisher-Yates algorithm
-	rand.Seed(time.Now().UnixNano())
-	for i := len(arr) - 1; i > 0; i-- {
-		j := rand.Intn(i + 1)
-		arr[i], arr[j] = arr[j], arr[i]
+	/* Insert a random value at each index */
+	for i := 0; i < size; i++ {
+		/* Implement same random number generation as in HW2 code */
+		arr[i] = rand.Int() % (size * 4)
 	}
 
 	return arr
 }
 
-func quickSort(A []int, start, stop int) {
+/**
+ @brief Implements quick sort algorithm on an array A
+ @param A unsorted integer array
+*/
+func quickSort(A []int) {
+	qusort(A, 0, len(A)-1)
+}
+
+/**
+ @brief performs the quick sort algorithm recusively on an array
+ @param A unsorted integer array
+ @param start starting index
+ @param stop stopping index
+*/
+func qusort(A []int, start, stop int) {
 	/* Check if valid start and stop indices were given */
 	if start < stop {
 		/* Create partition */
 		pivot := partition(A, start, stop)
 		/* Individually quickSort each partition */
-		quickSort(A, start, pivot-1)
-		quickSort(A, pivot+1, stop)
+		qusort(A, start, pivot - 1)
+		qusort(A, pivot + 1, stop)
 	}
 }
 
+/**
+ @brief Partition for Quick Sort. Use Randomized Index Selection Here
+ @param A array to partition
+ @param start the first index to use
+ @param stop the last index to use
+ @return int Index of the partition element
+*/
 func partition(A []int, start, stop int) int {
 	i := start
 	
