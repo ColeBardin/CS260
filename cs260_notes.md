@@ -68,3 +68,63 @@ For example, for integer values of v, return v % n for mapping
 For values with the same v % n result, we can implement queues/linked list to populate the cells
 
 Collision: when two vals are supposed to go to the same place in the array 
+
+## Trees
+
+Like linked lists except nodes can have multiple children
+
+Movement can only be done in one direction. If movement was bidirectional, it would be a Graph
+
+### Unary tree
+
+Linked list
+
+All LL are trees, but not all trees are LL
+
+### Binary tree
+
+Every node has at most 2 children
+
+### Terminology
+
+Root - Starting node
+
+Leaves - End nodes that do not point to anything else
+
+Branches - Middle nodes 
+
+Parent / Child / Sibling - Relations
+
+Ancestor / Descendant - Distant relation (Append w/ Proper to exclude yourself)
+
+## Binary Search Tree
+
+Sortable and easily insertable
+
+Order in which elements are inserted creates the unique tree
+
+### Requirements
+
+Left is always smaller
+
+Right is always larger
+
+### Notes
+
+#### Best Case
+
+Balanced trees
+
+Number of nodes: n = 2^(h+1) - 1
+
+Height: h = log2(n+1) - 1
+
+#### Worst Case
+
+All elements on one side
+
+log2(n) <= h <= n - 1
+
+### Deleting Nodes
+
+If deleting Root, replace it with Minimum on Right or Maximum on the Left
