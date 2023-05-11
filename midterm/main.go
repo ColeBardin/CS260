@@ -12,23 +12,24 @@ import (
 4: 0.001 ms
 5: 0.001 ms
 6: 0.003 ms
-7: 0.032 ms
-8: 0.023 ms
-9: 0.065 ms
-10: 0.220 ms
-11: 0.839 ms
-12: 4.536 ms
-13: 45.968 ms
-14: 45.989 ms
-15: 298.071 ms
-16: 557.660 ms
-17: 1480.923 ms
+7: 0.007 ms
+8: 0.012 ms
+9: 0.063 ms
+10: 0.074 ms
+11: 0.215 ms
+12: 0.405 ms
+13: 1.218 ms
+14: 3.213 ms
+15: 6.362 ms
+16: 16.971 ms
+17: 42.433 ms
 */
+
 func main() {
 	/* Repeat for N = 3 to 17 */
 	for N := 3; N <= 17 ; N++ {
 		/* Create an array of 2^N random values */
-		arr := generateRandomArray(int(math.Pow(2, float64(N))))
+		arr := makeRandomArray(int(math.Pow(2, float64(N))))
 
 		/* Start the timer */
 		start := time.Now()
@@ -40,24 +41,6 @@ func main() {
 		/* Output the elapsed time in miliseconds */
 		fmt.Printf("%d: %.3f ms\n", N, 1000 * elapsed.Seconds())
 	}
-}
-
-/**
- @brief Creates an array of random values
- @param size length of the array
- @return []int Array of random elements
-*/
-func generateRandomArray(size int) []int {
-	/* Create empty array of length size */
-	arr := make([]int, size)
-
-	/* Insert a random value at each index */
-	for i := 0; i < size; i++ {
-		/* Implement same random number generation as in HW2 code */
-		arr[i] = rand.Int() % (size * 4)
-	}
-
-	return arr
 }
 
 /**
@@ -93,13 +76,12 @@ func qusort(A []int, start, stop int) {
  @return int Index of the partition element
 */
 func partition(A []int, start, stop int) int {
+	/* Start at the beginning of this section */
 	i := start
 	
-	randomIndex := rand.Intn(len(A))
 	/* Swap randomIndex and stop indices */
-	A[randomIndex] += A[stop]
-	A[stop] = -A[stop] + A[randomIndex]
-	A[randomIndex] -= A[stop]
+	randomIndex := rand.Intn(len(A))
+	swap(A, randomIndex, stop)
 
 	/* Choose the pivot as the random value */
 	pivot := A[stop]
@@ -109,19 +91,44 @@ func partition(A []int, start, stop int) int {
 		/* If current value is less than the random pivot */
 		if A[j] <= pivot {
 			/* Swap A[i] and A[j] */
-			A[i] += A[j]
-			A[j] = -A[j] + A[i] 
-			A[i] -= A[j]
+			swap(A, i, j)
 			/* Move forward in array */
 			i++
 		}
 	}
 
 	/* Swap i and stop indices */
-	A[i] += A[stop]
-	A[stop] = -A[stop] + A[i]
-	A[i] -= A[stop]
+	swap(A, i, stop)
 
 	return i 
 }
 
+/*
+ @brief Swaps two elements in the array
+ @param A is the array to swap two elements in
+ @param indexA is the index of the first element
+ @param indexB is the index of the second element
+*/
+func swap(A []int, indexA, indexB int) {
+	temp := A[indexA]
+	A[indexA] = A[indexB]
+	A[indexB] = temp
+}
+
+/**
+ @brief Creates an array of random values
+ @param size length of the array
+ @return []int Array of random elements
+*/
+func makeRandomArray(size int) []int {
+	/* Create empty array of length size */
+	arr := make([]int, size)
+
+	/* Insert a random value at each index */
+	for i := 0; i < size; i++ {
+		/* Implement same random number generation as in HW2 code */
+		arr[i] = rand.Int() % (size * 4)
+	}
+
+	return arr
+}
