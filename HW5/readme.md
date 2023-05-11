@@ -81,3 +81,8 @@ By Cole Bardin : CAB572
 
 ### Approximation
 
+As seen from the output of `plotter.py`, the average height can be approximated with the following rule:
+
+1.75*(log2(N) - 1) < Average Height < 2.375*log2(N) - 1
+
+The results can be seen in 

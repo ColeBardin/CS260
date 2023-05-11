@@ -109,7 +109,7 @@ Left is always smaller
 
 Right is always larger
 
-### Notes
+### Tree Notes
 
 #### Best Case
 
@@ -128,3 +128,12 @@ log2(n) <= h <= n - 1
 ### Deleting Nodes
 
 If deleting Root, replace it with Minimum on Right or Maximum on the Left
+
+## Heap (not the memory)
+
+Also known as Priority Queues
+
+Binary tree but Child is always larger or equal to parent
+
+Smallest value will always be at the root
+

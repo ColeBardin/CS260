@@ -3,3 +3,6 @@
 
 # Windows Executables 
 *.exe
+
+# Python Virtual Environment
+.venv/*
