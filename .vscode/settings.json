@@ -8,5 +8,9 @@
         "clang-analyzer-deadcode.DeadStores",
         "clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling",
         "clang-analyzer-optin.portability.UnixAPI"
-    ]
+    ],
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8"
+    },
+    "python.formatting.provider": "none"
 }
