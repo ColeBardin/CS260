@@ -8,17 +8,30 @@
 
 #include "heap.h"
 #include <math.h>
+#include <stdio.h>
 
 void heapSort(int* array, int size) {
-
+    int i;
+    /* Make new heap with capacity of size */
+    Heap *newHeap = makenull(size);
+    /* Insert values in array param into new heap */
+    for(i = 0; i < size; i++){
+        insert(array[i], newHeap);
+    }
+    /* For each value in the heap,*/
+    for(i = 0; i < size; i++){
+        array[i] = min(newHeap);
+        deletemin(newHeap);
+    }
 }
 
 Heap* makenull(int capacity) {
+    /* Allocate memory and set default parameters */
     Heap* newHeap = malloc(sizeof(Heap));
     newHeap->data = malloc(sizeof(int) * capacity);
     newHeap->currentSize = 0;
     newHeap->maxSize = capacity;
-    
+
     /* Error handle malloc call to heap data array */
     if(newHeap->data == NULL){
         /* Return NULL to indicate initialization error */
@@ -46,16 +59,26 @@ bool empty(Heap* myHeap) {
 }
 
 int min(Heap* myHeap) {
+    int currentMin = -1;
     /* NULL check heap pointer */
-    if(myHeap != NULL){
-        if(myHeap->currentSize != 0){
-            /* Return element in position 0 */
-            return myHeap->data[0];
-        }else{
-            /* If no elements in heap, return -1 */
-            return -1;
+    if(myHeap == NULL){
+        return currentMin;
+    }
+    /* If there is at least one element in the heap, seg fault won't occur when accessing data array */
+    if(myHeap->currentSize > 0){
+        /* Start with current min as first value */
+        currentMin = myHeap->data[0];
+        /* Find if there is a value smaller than the first element */
+        for(int i = 0; i < myHeap->currentSize; i++){
+            if(myHeap->data[i] < currentMin){
+                currentMin = myHeap->data[i];
+                /* Put new minimum in position 0 */
+                swap(myHeap, 0, i);
+            }
         }
     }
+    /* Return smallest value in data array */
+    return currentMin;
 }
 
 void deletemin(Heap* myHeap) {
@@ -79,7 +102,21 @@ void deletemin(Heap* myHeap) {
 }
  
 void downheap(Heap* myHeap, int i) {
-    /* TODO */
+    int leftIndex = leftChild(i);
+    int rightIndex = rightChild(i);
+    /* index i has no children */
+    if(leftIndex >= myHeap->currentSize){
+        return;
+    }
+    /* Set minIndex to be index of i's smallest child */
+    int minIndex = myHeap->data[leftIndex] > myHeap->data[rightIndex] ? rightIndex : leftIndex;
+    /* If i's value is larger than its minimum child */
+    if(myHeap->data[i] > myHeap->data[minIndex]){
+        /* Swap i and i's smallest child */
+        swap(myHeap, i, minIndex);
+        /* Validate current heap position */
+        downheap(myHeap, minIndex);
+    }
 }
 
 void insert(int x, Heap* myHeap) {
@@ -102,19 +139,20 @@ void insert(int x, Heap* myHeap) {
 }
 
 void upheap(struct Heap* myHeap, int i) {
-    if(parent(i) < 0){
+    int parentIndex = parent(i);
+    if(parentIndex < 0){
         /* If new value has no parent (first val), do nothing */
         return;
-    }else if(myHeap->data[parent(i)] <= myHeap->data[i]){
+    }
+    int parentVal = myHeap->data[parentIndex];
+    if(parentVal <= myHeap->data[i]){
         /* If parent is less than current, heap conditions pass */
         return;
-    }else{
-        /* If not, swap parent and current value */
-        swap(myHeap, i, parent(i));
-        /* Upheap from parent's old index (current's new index) */
-        upheap(myHeap, parent(i));
     }
-
+    /* If not, swap parent and current value */
+    swap(myHeap, i, parentIndex);
+    /* Upheap from parent's old index (current's new index) */
+    upheap(myHeap, parentIndex);
 }
 
 int parent(int n) {
@@ -151,6 +189,13 @@ void swap(Heap* myHeap, int i, int j) {
     myHeap->data[j] = temp;
 }
 
-void printHeap(Heap* myHeap) {
-
-}
+/* A gift to the student: */
+void printHeap(Heap *myHeap) {
+    printf("Heap Current Size: %d\n", myHeap->currentSize);
+    printf("Heap Max Size: %d\n", myHeap->maxSize);
+    printf("Contents:\n");
+    for (int i = 0; i < myHeap->currentSize; i++) {
+        printf("%d ", myHeap->data[i]);
+    }
+    printf("\n");
+} /* Thanks! */
