@@ -1,29 +1,11 @@
 package main
 
 import (
-	"fmt"
 	"math"
 	"math/rand"
 	"time"
+	"fmt"
 )
-
-/*
-3: 0.001 ms
-4: 0.001 ms
-5: 0.001 ms
-6: 0.003 ms
-7: 0.007 ms
-8: 0.012 ms
-9: 0.063 ms
-10: 0.074 ms
-11: 0.215 ms
-12: 0.405 ms
-13: 1.218 ms
-14: 3.213 ms
-15: 6.362 ms
-16: 16.971 ms
-17: 42.433 ms
-*/
 
 func main() {
 	/* Repeat for N = 3 to 17 */

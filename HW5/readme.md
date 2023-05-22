@@ -2,7 +2,7 @@
 
 By Cole Bardin : CAB572
 
-## Part 2: Height Experiment
+## Part 3: Analysis
 
 ### Run 1
 
@@ -85,4 +85,6 @@ As seen from the output of `plotter.py`, the average height can be approximated 
 
 1.75*(log2(N) - 1) < Average Height < 2.375*log2(N) - 1
 
-The results can be seen in 
+The results can be seen in `compLinear.png` and `compLog.png`
+
+Raw input data can be found in `results.csv`, which the plotting program used to generate these images

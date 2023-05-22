@@ -1,23 +1,6 @@
 using System;
 using System.Diagnostics;
 
-/*
-3: 0.3704 ms
-4: 0.0055 ms
-5: 0.008 ms
-6: 0.0113 ms
-7: 0.0267 ms
-8: 0.0966 ms
-9: 0.2433 ms
-10: 0.3427 ms
-11: 0.7484 ms
-12: 1.9021 ms
-13: 5.032 ms
-14: 12.418 ms
-15: 30.6533 ms
-16: 86.2499 ms
-17: 248.7147 ms
-*/
 class QuickSort
 {
     static void Main()
