@@ -73,30 +73,33 @@ int min(Heap* myHeap) {
 }
 
 void deletemin(Heap* myHeap) {
-    if(myHeap != NULL){
-        if(myHeap->currentSize == 0){
-            /* If no elements, do nothing */
-            return;
-        }else{
-            /* Swap first element with last element */
-            swap(myHeap, 0, myHeap->currentSize - 1);
-            /* Decrement size to make that value as deleted */
-            myHeap->currentSize--;
-            /* Downheap heap to validate order */
-            downheap(myHeap, 0);
-        }
+    if(!empty(myHeap)){
+        /* Swap first element with last element */
+        swap(myHeap, 0, myHeap->currentSize - 1);
+        /* Decrement size to make that value as deleted */
+        myHeap->currentSize--;
+        /* Downheap heap to validate order */
+        downheap(myHeap, 0);
     }
 }
  
 void downheap(Heap* myHeap, int i) {
     int leftIndex = leftChild(i);
     int rightIndex = rightChild(i);
+    int minIndex;
     /* index i has no children */
     if(leftIndex >= myHeap->currentSize){
         return;
     }
-    /* Set minIndex to be index of i's smallest child */
-    int minIndex = myHeap->data[leftIndex] > myHeap->data[rightIndex] ? rightIndex : leftIndex;
+    
+    if(rightIndex >= myHeap->currentSize){
+        /* Min index is left child if right child doesn't exist */
+        minIndex = leftIndex;
+    }else{
+        /* Choose smallest value if both children exist */
+        minIndex = myHeap->data[leftIndex] > myHeap->data[rightIndex] ? rightIndex : leftIndex;
+    }
+
     /* If i's value is larger than its minimum child */
     if(myHeap->data[i] > myHeap->data[minIndex]){
         /* Swap i and i's smallest child */
@@ -150,12 +153,12 @@ int parent(int n) {
 
 int leftChild(int n) {
     /* Left child equation from lecture */
-    return (n + 1) * 2 - 1;
+    return n * 2 + 1;
 }
 
 int rightChild(int n) {
     /* Right child equation from lecture */
-    return (n + 1) * 2;
+    return n * 2 + 2;
 }
 
 void swap(Heap* myHeap, int i, int j) {
