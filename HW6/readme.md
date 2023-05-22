@@ -10,18 +10,32 @@ Running Timings.
 All Times in milliseconds.
 |    Size |       Heap |
 | ----- | --------- |
-|       8 |     0.0090 |
-|      16 |     0.0070 |
-|      32 |     0.0140 |
-|      64 |     0.0330 |
-|     128 |     0.0810 |
-|     256 |     0.2370 |
-|     512 |     0.7890 |
-|    1024 |     2.6600 |
-|    2048 |     7.6440 |
-|    4096 |    22.3700 |
-|    8192 |    47.8180 |
-|   16384 |   176.9330 |
-|   32768 |   731.8590 |
-|   65536 |  2723.0850 |
-|  131072 | 10583.2920 |
+|       8 |     0.0000 |
+|      16 |     0.0000 |
+|      32 |     0.0000 |
+|      64 |     0.0000 |
+|     128 |     0.0000 |
+|     256 |     0.0000 |
+|     512 |     0.0000 |
+|    1024 |     0.0000 |
+|    2048 |     1.0000 |
+|    4096 |     7.0000 |
+|    8192 |    25.0000 |
+|   16384 |   100.0000 |
+|   32768 |   395.0000 |
+|   65536 |  1528.0000 |
+|  131072 |  6148.0000 |
+
+### Questions
+
+What was the fastest algorithm?
+It appears Quicksort is still the fastest, but very close with Mergesort.
+
+What was the slowest algorithm?
+Out of these three, Heapsort, but barely
+
+Did the timings match the analysis from class?
+Yes and no. Despite all having the same average runtime, my Heapsort was a bit slower, which matches what the internet tends to say about this comparison
+
+What was the hardest part of this assignment?
+Nothing

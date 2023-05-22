@@ -60,24 +60,13 @@ bool empty(Heap* myHeap) {
 
 int min(Heap* myHeap) {
     int currentMin = -1;
-    int minIndex = 0;
     /* NULL check heap pointer */
     if(myHeap == NULL){
         return currentMin;
     }
     /* If there is at least one element in the heap, seg fault won't occur when accessing data array */
     if(myHeap->currentSize > 0){
-        /* Start with current min as first value */
         currentMin = myHeap->data[0];
-        /* Find if there is a value smaller than the first element */
-        for(int i = 0; i < myHeap->currentSize; i++){
-            if(myHeap->data[i] < currentMin){
-                currentMin = myHeap->data[i];
-                minIndex = i;
-            }
-        }
-        /* Put new minimum in position 0 */
-        swap(myHeap, 0, minIndex);
     }
     /* Return smallest value in data array */
     return currentMin;
@@ -87,10 +76,6 @@ void deletemin(Heap* myHeap) {
     if(myHeap != NULL){
         if(myHeap->currentSize == 0){
             /* If no elements, do nothing */
-            return;
-        }else if(myHeap->currentSize == 1){
-            /* If there is only one element, decrement size */
-            myHeap->currentSize--;
             return;
         }else{
             /* Swap first element with last element */
@@ -129,6 +114,7 @@ void insert(int x, Heap* myHeap) {
 
     /* If size is at max, cannot insert new value */
     if(myHeap->currentSize == myHeap->maxSize){
+        printf("Warning! Cannot insert into full Heap\n");
         return;
     }
 
