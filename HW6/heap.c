@@ -60,6 +60,7 @@ bool empty(Heap* myHeap) {
 
 int min(Heap* myHeap) {
     int currentMin = -1;
+    int minIndex = 0;
     /* NULL check heap pointer */
     if(myHeap == NULL){
         return currentMin;
@@ -72,10 +73,11 @@ int min(Heap* myHeap) {
         for(int i = 0; i < myHeap->currentSize; i++){
             if(myHeap->data[i] < currentMin){
                 currentMin = myHeap->data[i];
-                /* Put new minimum in position 0 */
-                swap(myHeap, 0, i);
+                minIndex = i;
             }
         }
+        /* Put new minimum in position 0 */
+        swap(myHeap, 0, minIndex);
     }
     /* Return smallest value in data array */
     return currentMin;
@@ -181,6 +183,10 @@ void swap(Heap* myHeap, int i, int j) {
     }
     /* If i or j is out of range of current num of elements, should not swap */
     if(j > myHeap->currentSize - 1 || i > myHeap->currentSize - 1){
+        return;
+    }
+    /* If indices are the same, no need to swap */
+    if(i == j){
         return;
     }
     /* Swap two integers in the array */

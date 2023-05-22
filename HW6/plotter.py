@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 
-filename = "results"
+filename = "results.csv"
 size = []
 merge = []
 quick = []
@@ -8,7 +8,7 @@ heap = []
 
 with open(filename, "r") as file:
     for line in file:
-        splitLine = line.split('|')
+        splitLine = line.split(',')
         size.append(float(splitLine[0]))
         merge.append(float(splitLine[1]))
         quick.append(float(splitLine[2]))
