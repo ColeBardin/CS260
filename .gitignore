@@ -4,5 +4,8 @@
 # Windows Executables 
 *.exe
 
+# UNIX Executables
+*main
+
 # Python Virtual Environment
 .venv/*
