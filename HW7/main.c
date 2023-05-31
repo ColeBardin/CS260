@@ -1,8 +1,17 @@
 #include <stdio.h>
+#include "huffmanHeap.h"
 
-/* Sorry no help on this one */
+int main(){
+    char filename[64];
+    int ret;
 
-int main(void) {
-  printf("Hello World\n");
-  return 0;
+
+    printf("Enter File Name to read:\n"); 
+    ret = scanf("%s", filename);
+    if(ret != 1){
+        printf("Error reading filename\n");
+        return -1;
+    }
+    huffman(filename);
+    return 0;
 }

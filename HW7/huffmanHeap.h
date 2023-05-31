@@ -1,0 +1,117 @@
+/**
+	@file
+	@author Mark Boady <mwb33@drexel.edu>
+	@date 2023
+	@section DESCRIPTION
+ 
+	This file contains the interface for a heap data structure.
+ 
+	It also includes heapSort which uses the heap to
+	sort an array.
+ */
+/*
+	You MAY NOT add or remove from this file.
+	You MUST code to the interface provided.
+ */
+
+#ifndef _HEAP_H_
+#define _HEAP_H_
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include "huffmanBST.h"
+
+void huffman(char *filename);
+void getHuffmanCodes(int *A, Node *current, int prev);
+
+/**
+	A structure to represent a heap (Priority Queue / Min Heap) Data Structure.
+ */
+typedef struct Heap Heap;
+struct Heap{
+	BST **data;/**< A pointer to your array of trees. */
+	int maxSize;/**< The maximum size of the heap before it needs to be resized.*/
+	int currentSize;/**< The current number of items in the array. */
+};
+
+/**
+ Create a new empty Heap
+ @return A pointer to the new heap
+ */
+Heap* newHeap(int capacity);
+
+/**
+ Free all memory used by the heap
+ @param myHeap is the heap to free
+ */
+void deleteHeap(Heap* myHeap);
+
+/**
+ Ask if the heap is currently empty
+ @param myHeap is a pointer to the heap
+ @return true if empty and false otherwise
+ */
+bool emptyHeap(Heap* myHeap);
+
+
+/**
+ Delete the minimum from the heap
+ @param myHeap is the heap to delete from
+ */
+void deleteHeapMin(Heap* myHeap);
+
+/**
+ Downheap starting at the node at index i
+ @param myHeap is the heap to modify
+ @param i is the index to start from
+ */
+void downHeap(Heap* myHeap, int i);
+
+void heapInsert(float value, char name, BST* T, Heap* myHeap);
+
+/**
+ Upheap starting at node indexed to i
+ @param myHeap is the heap to fix
+ @param i is the index of the node to start upheaping at
+ */
+void upHeap(struct Heap* myHeap,int i);
+
+/**
+ What is the index of node n's parent?
+ @param n is the child node's index
+ @return n's parent's index
+ */
+int heapNodeParent(int n);
+
+/**
+ What index contains the left child of n?
+ @param n is the index of the parent
+ @return the index of the left child of n
+ */
+int heapNodeLeftChild(int n);
+
+/**
+ What index contains the right child of n?
+ @param n is the index of the parent
+ @return the index of the right child of n
+ */
+int heapNodeRightChild(int n);
+
+/**
+ Swap the values at indexes i and j in the heap.
+ @param myHeap is the heap to modify
+ @param i is the first index to swap
+ @param j is the second index to swap with
+ */
+void heapSwap(Heap* myHeap, int i, int j);
+
+/**
+ This function prints the heap and will help you debug.
+ @param myHeap is the heap to print
+ */
+void printHeap(Heap* myHeap);
+
+void printBin(int num);
+
+#endif
