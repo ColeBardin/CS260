@@ -70,9 +70,9 @@ void huffman(char *filename){
     printf("| ASCII | Percent | Code |\n");
     for(int i = 0; i < 128; i++){
         if(charCount[i] > 0.0){
-            printf("huff: %d(%c): %d: ", i, (char)i, huffCode[i]);
+            printf("| %5d | %7.5f | ", i, charPercent[i]);
             printBin(huffCode[i]);
-            printf("\n");
+            printf(" |\n");
         }
     }
     /* Free memory for Heap and Trees */
