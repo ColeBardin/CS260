@@ -4,14 +4,8 @@
 	@date 2023
 	@section DESCRIPTION
  
-	This file contains the interface for a heap data structure.
+	This file contains the interface for a heap data structure specialized for huffman encoding.
  
-	It also includes heapSort which uses the heap to
-	sort an array.
- */
-/*
-	You MAY NOT add or remove from this file.
-	You MUST code to the interface provided.
  */
 
 #ifndef _HEAP_H_
@@ -22,8 +16,23 @@
 #include <stdbool.h>
 #include "huffmanBST.h"
 
+/**
+ * @brief Calculates the huffman codes for the given file.
+ * Prints huffman codes in markdown table format.
+ * Only considers characters from 0 to 127 inclusive
+ * 
+ * @param filename file to read
+ */
 void huffman(char *filename);
-void getHuffmanCodes(int *A, Node *current, int prev);
+
+/**
+ * @brief determine the huffman codes for the Binary search tree
+ * 
+ * @param A array to store huff codes (character values = indices)
+ * @param current current Node
+ * @param code current huffman code for the node
+ */
+void getHuffmanCodes(int *A, Node *current, int code);
 
 /**
 	A structure to represent a heap (Priority Queue / Min Heap) Data Structure.
@@ -68,6 +77,11 @@ void deleteHeapMin(Heap* myHeap);
  */
 void downHeap(Heap* myHeap, int i);
 
+/**
+ Insert value x into the Heap
+ @param x is the value to insert
+ @param myHeap is the heap to insert into
+ */
 void heapInsert(float value, char name, BST* T, Heap* myHeap);
 
 /**
@@ -112,6 +126,11 @@ void heapSwap(Heap* myHeap, int i, int j);
  */
 void printHeap(Heap* myHeap);
 
+/**
+ * @brief Prints out binary value of integer, skips leading zeros for nonzero inputs
+ * 
+ * @param num number to print out in binary
+ */
 void printBin(int num);
 
 #endif

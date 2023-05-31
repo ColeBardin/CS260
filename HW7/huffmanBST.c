@@ -3,7 +3,8 @@
     @author Cole Bardin <cab5721@drexel.edu>
     @date May 02, 2023
     @section DESCRIPTION
-    This is the source file for the Binary Search Tree library
+    
+    This file includes a Binary Search Tree library focused on implementing huffman encoding.
  */
 
 #include "huffmanBST.h"

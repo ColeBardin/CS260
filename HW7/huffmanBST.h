@@ -4,8 +4,7 @@
 	@date 2022
 	@section DESCRIPTION
  
-	This is a header file for a Binary Search Tree Class.
-	Students will implement a related bst.c file to finish this assignment.
+	This is a header file for a Binary Search Tree specialized for huffman encoding.
  */
 
 /* You MAY NOT change this file */
@@ -36,9 +35,6 @@ struct BST{
 	Node* root; /**< The root node of the binary tree.*/
 };
 
-/* Front End Methods */
-/* These method act on the TREE starting at the root */
-
 /**
 	Create a new empty Binary Search Tree
 	@return Pointer to empty BST
@@ -51,10 +47,28 @@ BST* newBST();
  */
 void deleteBST(BST* T);
 
+/**
+ * @brief Merges two Huffman BSTs and returns the merged tree
+ * 
+ * @param firstMin Tree with minimum root value
+ * @param secondMin Tree with second minimum root value
+ * @return BST* Merged BST
+ */
 BST *mergeBST(BST* firstMin, BST* secondMin);
 
+/**
+	Find a value in the BST.
+	@param T is the tree to search
+	@param target is the value to search for
+	@return true if found and false if not in tree
+ */
 bool find(BST *T, float target);
 
+/**
+	Delete a value from the tree
+	@param T is the tree to delete from
+	@param target is the value to delete
+ */
 void deleteFromTree(BST *T, float target);
 
 /**
@@ -116,13 +130,40 @@ Node* deleteValue(float target, Node* current);
  */
 Node* deleteNode(Node* current);
 
-void preorder(BST *T);
+/**
+	Print the tree in inorder to stdout. End with newline
+	@param T is the tree to print
+ */
 void inorder(BST *T);
+
+/**
+	Print the tree in preorder to stdout. End with newline
+	@param T is the tree to print
+ */
+void preorder(BST *T);
+
+/**
+	Print the tree in postorder to stdout. End with newline
+	@param T is the tree to print
+ */
 void postorder(BST *T);
 
-void preorderWalker(Node *current);
-void postorderWalker(Node *current);
+/**
+	Recursively print the tree inorder. End with a space.
+	@param current is the node to print
+ */
 void inorderWalker(Node *current);
 
+/**
+	Recursively print the tree preorder. End with a space.
+	@param current is the node to print
+ */
+void preorderWalker(Node *current);
+
+/**
+	Recursively print the tree postorder. End with a space
+	@param current is the node to print
+ */
+void postorderWalker(Node *current);
 
 #endif
