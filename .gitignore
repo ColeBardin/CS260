@@ -7,5 +7,9 @@
 # UNIX Executables
 *main
 
+# VS Code
+*.cache
+*.editorconfig
+
 # Python Virtual Environment
 .venv/*

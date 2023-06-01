@@ -29,5 +29,5 @@ plt.plot(size, heap, 'go-')
 plt.legend(["Merge", "Quick", "Heap"])
 
 # Save plot to PNG
-plt.show()
+#plt.show()
 plt.savefig("timingsComp.png")
