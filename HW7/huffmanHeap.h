@@ -32,7 +32,7 @@ void huffman(char *filename);
  * @param current current Node
  * @param code current huffman code for the node
  */
-void getHuffmanCodes(char **A, Node *current, char *code);
+void getHuffmanCodes(char **A, Node *current, char *code, bool rightMove);
 
 /**
 	A structure to represent a heap (Priority Queue / Min Heap) Data Structure.

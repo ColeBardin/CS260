@@ -26,6 +26,7 @@ struct Node{
 	char name; /**< Character for this node, -1 for no char.*/
 	Node* left; /**< The left child of this node.*/
 	Node* right; /**< The right child of this node.*/
+	char code[15]; /**< Stores*/
 };
 
 /**
