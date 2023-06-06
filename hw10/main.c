@@ -18,27 +18,26 @@
 #include <stdio.h>
 #include "prim.h"
 
-int main(){
-    char filename[64];
-    int startingNode;
-    FILE *file;
+int main() {
+    char filename[64]; /* Input filename from user */
+    int startingNode; /* Node to start at from user */
 
+    /* Get filename from user */
     printf("Enter File Containing Graph:\n");
     if(scanf("%s", filename) < 1){
         printf("ERROR: Could not read filename from STDIN\n");
         return -1;
     }
     
-
+    /* Get starting node from user */
     printf("Enter Starting Node:\n");
     if(scanf("%d", &startingNode) < 1){
         printf("ERROR: Could not read starting node from STDIN\n");
         return -2;
     }
 
+    /* Start prim algorithm */
     prim(filename, startingNode);
 
     return 0;
 }
-
-

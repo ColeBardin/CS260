@@ -189,5 +189,6 @@ void printPrimHeap(Heap *myHeap) {
 } /* Thanks! */
 
 void primHeapClear(Heap* myHeap) {
+    /* Sets current size to 0, allows data to be overwritten */
     myHeap->currentSize = 0;
 }

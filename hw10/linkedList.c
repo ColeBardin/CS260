@@ -115,19 +115,29 @@ int lengthLinkedList(LinkedList *list) {
 }
 
 void linkedListRemove(LinkedList *list, int target) {
+    /* Stop if invalid linkedList */
     if(list == NULL){
         return;
     }
-    Node *current;
-    Node *previous;
+    Node *current; /* Tracks current node */
+    Node *previous; /* Tracks previous node */
 
+    /* Iterate through each node */
     for(current = list->head, previous = NULL; current != NULL; current = current->next){
+        /* If the current node has the target value */
         if(current->value == target){
             if(previous == NULL){
+                /* If current is head element, update head element */
                 list->head = current->next;
+            }else if(current->next == NULL){
+                /* If current is tail element, update previous node and tail pointer */
+                previous->next = NULL;
+                list->tail = previous;
             }else{
+                /* If element is in middle, forward previous pointer */
                 previous->next = current->next;
             }
+            /* Free memory for current node in all 3 cases */
             free(current);
             return;
         }

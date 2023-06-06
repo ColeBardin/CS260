@@ -10,16 +10,22 @@
 
 #include <stdbool.h>
 
+/**
+    A structure to represent a LinkedList node
+ */
 typedef struct Node Node;
 struct Node {
-    int value;
-    Node *next;
+    int value; /**< value of the node */
+    Node *next; /**< pointer to next element in list */
 };
 
+/**
+    A structure to represent a Linked List
+ */
 typedef struct LinkedList LinkedList;
 struct LinkedList {
-    Node *head;
-    Node *tail;
+    Node *head; /**< pointer to the head node */
+    Node *tail; /**< pointer to the tail node */
 };
 
 /**
@@ -69,4 +75,10 @@ void printList(LinkedList *list);
  */
 int lengthLinkedList(LinkedList *list);
 
+/**
+ * @brief Removes an element from the list if it is in the list
+ * 
+ * @param list List to remove from 
+ * @param target value to remove
+ */
 void linkedListRemove(LinkedList *list, int target);

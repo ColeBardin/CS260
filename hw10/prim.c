@@ -4,14 +4,17 @@
     @date June 06, 2023
     @section DESCRIPTION
     This file contains the Prim's algorithm function and helper functions. It reads a file that describes a graph along with a staring node.
-    It uses Prim's algorithm to find the MST of the graph, outputting its steps to STDOUT
+    Uses Prim's algorithm to find the MST of the graph, outputting its steps to STDOUT.
+    Stores the MST nodes in a LinkedList and uses a Heap to sort bridging Edges. 
+    Does permanently store the MST edges, it just prints out what they are as it selects them.
+    Outputs the total MST weight.
  */
 
 #include "prim.h"
 #include <stdio.h>
 
 void prim(char *filename, int startingNode) {
-    FILE *file;
+    FILE *file; /* File pointer for graph description */
 
     /* Attempt to open the file from the user */
     if((file = fopen(filename, "r")) == NULL){
@@ -143,7 +146,7 @@ void findBridgingNodes(Heap *destHeap, LinkedList *MST, int numNodes, int **adjM
     /* Iterate over each edge pair */
     for(int i = 0; i < numNodes; i++){
         for(int j = 0; j < i; j++){
-            /* If there is a valid edge for this node pair */
+            /* If there is a valid edge for this pair of nodes */
             if(adjMatrix[i][j] > 0){
                 if(linkedListContains(i, MST) && !linkedListContains(j, MST)){
                     /* If i is in MST and j is not, insert edge */
