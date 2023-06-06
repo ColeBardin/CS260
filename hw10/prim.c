@@ -143,7 +143,7 @@ void deleteAdjMatrix(int **A, int size) {
 void findBridgingNodes(Heap *destHeap, LinkedList *MST, int numNodes, int **adjMatrix) {
     /* Clear data array of destination Heap */
     primHeapClear(destHeap);
-    /* Iterate over each edge pair */
+    /* Iterate over each unique edge pair */
     for(int i = 0; i < numNodes; i++){
         for(int j = 0; j < i; j++){
             /* If there is a valid edge for this pair of nodes */
