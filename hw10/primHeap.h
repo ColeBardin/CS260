@@ -3,7 +3,7 @@
 	@author Cole Bardin <cab5721@drexel.edu>
 	@date June 06, 2023
 	@section DESCRIPTION
-	Write a description of what this file contains here.
+	This file contains a modified Heap structure to store graph edges sorted by weight.
  */
 
 #pragma once
@@ -120,4 +120,9 @@ void primHeapSwap(Heap* myHeap, int i, int j);
  */
 void printPrimHeap(Heap* myHeap);
 
+/**
+ * @brief Clears a heaps data. Sets current size to 0
+ * 
+ * @param myHeap heap to clear
+ */
 void primHeapClear(Heap* myHeap);

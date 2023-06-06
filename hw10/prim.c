@@ -3,102 +3,157 @@
     @author Cole Bardin <cab5721@drexel.edu>
     @date June 06, 2023
     @section DESCRIPTION
-    Write a description of what this file contains here.
+    This file contains the Prim's algorithm function and helper functions. It reads a file that describes a graph along with a staring node.
+    It uses Prim's algorithm to find the MST of the graph, outputting its steps to STDOUT
  */
 
 #include "prim.h"
-#include "primHeap.h"
-#include "linkedList.h"
 #include <stdio.h>
 
 void prim(char *filename, int startingNode) {
     FILE *file;
 
+    /* Attempt to open the file from the user */
     if((file = fopen(filename, "r")) == NULL){
         printf("ERROR: Could not open file: %s\n", filename);
         return;
     }
 
+    /* Print out runtime stats */
     printf("Running Prim's Algorithm\n");
     printf("Input File: %s\n", filename);
     printf("Starting Node: %d\n", startingNode);
 
     int numNodes;
+    /* Get the number of expected nodes from the file */
     if(fscanf(file, "%d", &numNodes) < 1){
         printf("ERROR: Failed reading number of nodes from file: %s\n", filename);
         return;
     }
 
-    Heap *heap = newPrimHeap(numNodes*numNodes);
-    if(heap == NULL){
-        printf("ERROR: Failed to allocate memory for heap\n");
-        return;
-    }
-
-    int **adjMatrix = malloc(sizeof(int *) * numNodes);
+    /* Create an Adjacency Matrix for tracking edges */
+    int **adjMatrix = makeAdjMatrix(numNodes);
     if(adjMatrix == NULL){
-        printf("ERROR: Failed to allocate memory for adjacency matrix double pointer\n");
-        deletePrimHeap(heap);
+        /* If adjMatrix init fails, close file and return */
+        printf("ERROR: Failed to initialize an adjacency matrix of size %d\n", numNodes);
         fclose(file);
         return;
     }
-    for(int i = 0; i < numNodes; i++){
-        adjMatrix[i] = malloc(sizeof(int) * numNodes);
-        if(adjMatrix[i] == NULL){
-            printf("ERROR: Failed to allocate memory for adjacency matrix single pointer\n");
-            for(int j = 0; j < i; j++){
-                free(adjMatrix[j]);
-            }
-            free(adjMatrix);
-            deletePrimHeap(heap);
-            fclose(file);
-            return;
-        }
-        for(int j = 0; j < numNodes; j++){
-            adjMatrix[i][j] = -1;
-        }
-    }
+    
+    int fromNode, toNode, weight;
     /* Add all edges into adj matrix */
-    int fromEdge, toEdge, weight;
-    while(fscanf(file, "%d %d %d", &fromEdge, &toEdge, &weight) > 0){
-        adjMatrix[fromEdge][toEdge] = weight;
-        adjMatrix[toEdge][fromEdge] = weight;
+    while(fscanf(file, "%d %d %d", &fromNode, &toNode, &weight) > 0){
+        adjMatrix[fromNode][toNode] = weight;
+        adjMatrix[toNode][fromNode] = weight;
     }
     fclose(file);
 
+    /* Create Heap for sorting bridging edges */
+    Heap *heap = newPrimHeap(numNodes*numNodes);
+    if(heap == NULL){
+        /* If Heap init fails, free adj matrix and return */
+        printf("ERROR: Failed to allocate memory for heap\n");
+        deleteAdjMatrix(adjMatrix, numNodes);
+        return;
+    }
+
+    /* Create LinkedList for tracking nodes in the MST */
     LinkedList *MSTNodes = newLinkedList();
+    if(MSTNodes == NULL){
+        /* If LinkedList init fails, free adj matrix, free heap, and return */
+        printf("ERROR: Failed to initialize LinkedList\n");
+        deleteAdjMatrix(adjMatrix, numNodes);
+        deletePrimHeap(heap);
+        return;
+    }
+
+    /* Add user given starting node to MST */
     linkedListInsert(startingNode, MSTNodes);    
 
     int totalWeight = 0;
+    /* Repeat until all nodes are in the MST */
     while(lengthLinkedList(MSTNodes) != numNodes){
-        for(int i = 0; i < numNodes; i++){
-            for(int j = 0; j < i; j++){
-                if(adjMatrix[i][j] > 0){
-                    if(linkedListContains(i, MSTNodes) && !linkedListContains(j, MSTNodes)){
-                        primHeapInsert(i, j, adjMatrix[i][j], heap);
-                    }else if(!linkedListContains(i, MSTNodes) && linkedListContains(j, MSTNodes)){
-                        primHeapInsert(j, i, adjMatrix[i][j], heap);
-                    }
-                }
-            }
-        }
+        /* Put bridging nodes into Heap */
+        findBridgingNodes(heap, MSTNodes, numNodes, adjMatrix);
 
-        fromEdge = heap->data[0]->nodeA;
-        toEdge = heap->data[0]->nodeB;
+        /* Get smallest weighted bridging edge from Heap */
+        fromNode = heap->data[0]->nodeA;
+        toNode = heap->data[0]->nodeB;
         weight = heap->data[0]->weight;
-        printf("Added %d\n", toEdge);
-        printf("Using Edge (%d, %d) with weight %d\n", toEdge > fromEdge ? fromEdge : toEdge, toEdge > fromEdge ? toEdge : fromEdge, weight);
-        linkedListInsert(toEdge, MSTNodes);
-        primHeapClear(heap);
+
+        /* Print out newly added Node and the Edge used */
+        printf("Added %d\n", toNode);
+        printf("Using Edge (%d, %d) with weight %d\n", toNode > fromNode ? fromNode : toNode, toNode > fromNode ? toNode : fromNode, weight);
+
+        /* Add new Node to MST */
+        linkedListInsert(toNode, MSTNodes);
+        /* Track weight of MST */
         totalWeight += weight;
     }
 
     printf("Total Weight: %d\n", totalWeight);
 
-    for(int i = 0; i < numNodes; i++){
-        free(adjMatrix[i]);
-    }
-    free(adjMatrix);
-    deleteLinkedList(MSTNodes);
+    /* Free all memory used in data structures */
     deletePrimHeap(heap);
+    deleteAdjMatrix(adjMatrix, numNodes);
+    deleteLinkedList(MSTNodes);
+}
+
+int **makeAdjMatrix(int size) {
+    /* Allocate size# of array of int pointers*/
+    int **new = malloc(sizeof(int *) * size);
+    if(new == NULL){
+        return NULL;
+    }
+
+    /* For each int pointer, allocate an array of ints of length size */
+    for(int i = 0; i < size; i++){
+        new[i] = malloc(sizeof(int) * size);
+        if(new[i] == NULL){
+            /* If any malloc fails, free all memory*/
+            for(int j = 0; j < i; j++){
+                free(new[j]);
+            }
+            free(new);
+            return NULL;
+        }
+        /* Set default value to be -1 */
+        for(int j = 0; j < i; j++){
+            new[i][j] = -1;
+        }
+    }
+    
+    return new;
+}
+
+void deleteAdjMatrix(int **A, int size) {
+    if(A != NULL){
+        /* Free each array of ints */
+        for(int i = 0; i < size; i++){
+            free(A[i]);
+        }
+        /* Free the double pointer */
+        free(A);
+    }
+}
+
+void findBridgingNodes(Heap *destHeap, LinkedList *MST, int numNodes, int **adjMatrix) {
+    /* Clear data array of destination Heap */
+    primHeapClear(destHeap);
+    /* Iterate over each edge pair */
+    for(int i = 0; i < numNodes; i++){
+        for(int j = 0; j < i; j++){
+            /* If there is a valid edge for this node pair */
+            if(adjMatrix[i][j] > 0){
+                if(linkedListContains(i, MST) && !linkedListContains(j, MST)){
+                    /* If i is in MST and j is not, insert edge */
+                    primHeapInsert(i, j, adjMatrix[i][j], destHeap);
+                }else if(!linkedListContains(i, MST) && linkedListContains(j, MST)){
+                    /* If j is in MST and i is not, insert edge */
+                    primHeapInsert(j, i, adjMatrix[i][j], destHeap);
+                }
+                /* Insertions are ordered such that nodeA is node in MST, and nodeB is new node (within Edge struct) */
+            }
+        }
+    }
 }

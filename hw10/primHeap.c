@@ -3,7 +3,7 @@
     @author Cole Bardin <cab5721@drexel.edu>
     @date June 06, 2023
     @section DESCRIPTION
-    This file implements the heap libray methods from heap.h
+    This file implements the library functions from primHeap.h
  */
 
 #include "primHeap.h"

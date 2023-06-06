@@ -1,9 +1,9 @@
-#/**
-  @file linkedlist.h
-  @author Cole Bardin <cab5721@drexel.edu>
-  @date April 27, 2023
-  @section DESCRIPTION
-  Write a description of what this file contains here.
+/**
+    @file linkedList.h
+    @author Cole Bardin <cab5721@drexel.edu>
+    @date June 06, 2023
+    @section DESCRIPTION
+    This file defines the library functions for a singly linked list of integers
  */
 
 #pragma once
