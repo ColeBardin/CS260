@@ -119,3 +119,5 @@ void primHeapSwap(Heap* myHeap, int i, int j);
  @param myHeap is the heap to print
  */
 void printPrimHeap(Heap* myHeap);
+
+void primHeapClear(Heap* myHeap);

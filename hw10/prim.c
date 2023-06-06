@@ -8,6 +8,7 @@
 
 #include "prim.h"
 #include "primHeap.h"
+#include "linkedList.h"
 #include <stdio.h>
 
 void prim(char *filename, int startingNode) {
@@ -27,7 +28,6 @@ void prim(char *filename, int startingNode) {
         printf("ERROR: Failed reading number of nodes from file: %s\n", filename);
         return;
     }
-    printf("Number of nodes: %d\n", numNodes);
 
     Heap *heap = newPrimHeap(numNodes*numNodes);
     if(heap == NULL){
@@ -35,13 +35,70 @@ void prim(char *filename, int startingNode) {
         return;
     }
 
-    int fromEdge, toEdge, weight;
-    int edgeCount = 0;
-    while(fscanf(file, "%d %d %d", &fromEdge, &toEdge, &weight) > 0){
-        primHeapInsert(fromEdge, toEdge, weight, heap);
-        edgeCount++;
+    int **adjMatrix = malloc(sizeof(int *) * numNodes);
+    if(adjMatrix == NULL){
+        printf("ERROR: Failed to allocate memory for adjacency matrix double pointer\n");
+        deletePrimHeap(heap);
+        fclose(file);
+        return;
     }
-    printPrimHeap(heap);
-
+    for(int i = 0; i < numNodes; i++){
+        adjMatrix[i] = malloc(sizeof(int) * numNodes);
+        if(adjMatrix[i] == NULL){
+            printf("ERROR: Failed to allocate memory for adjacency matrix single pointer\n");
+            for(int j = 0; j < i; j++){
+                free(adjMatrix[j]);
+            }
+            free(adjMatrix);
+            deletePrimHeap(heap);
+            fclose(file);
+            return;
+        }
+        for(int j = 0; j < numNodes; j++){
+            adjMatrix[i][j] = -1;
+        }
+    }
+    /* Add all edges into adj matrix */
+    int fromEdge, toEdge, weight;
+    while(fscanf(file, "%d %d %d", &fromEdge, &toEdge, &weight) > 0){
+        adjMatrix[fromEdge][toEdge] = weight;
+        adjMatrix[toEdge][fromEdge] = weight;
+    }
     fclose(file);
+
+    LinkedList *MSTNodes = newLinkedList();
+    linkedListInsert(startingNode, MSTNodes);    
+
+    int totalWeight = 0;
+    while(lengthLinkedList(MSTNodes) != numNodes){
+        for(int i = 0; i < numNodes; i++){
+            for(int j = 0; j < i; j++){
+                if(adjMatrix[i][j] > 0){
+                    if(linkedListContains(i, MSTNodes) && !linkedListContains(j, MSTNodes)){
+                        primHeapInsert(i, j, adjMatrix[i][j], heap);
+                    }else if(!linkedListContains(i, MSTNodes) && linkedListContains(j, MSTNodes)){
+                        primHeapInsert(j, i, adjMatrix[i][j], heap);
+                    }
+                }
+            }
+        }
+
+        fromEdge = heap->data[0]->nodeA;
+        toEdge = heap->data[0]->nodeB;
+        weight = heap->data[0]->weight;
+        printf("Added %d\n", toEdge);
+        printf("Using Edge (%d, %d) with weight %d\n", toEdge > fromEdge ? fromEdge : toEdge, toEdge > fromEdge ? toEdge : fromEdge, weight);
+        linkedListInsert(toEdge, MSTNodes);
+        primHeapClear(heap);
+        totalWeight += weight;
+    }
+
+    printf("Total Weight: %d\n", totalWeight);
+
+    for(int i = 0; i < numNodes; i++){
+        free(adjMatrix[i]);
+    }
+    free(adjMatrix);
+    deleteLinkedList(MSTNodes);
+    deletePrimHeap(heap);
 }

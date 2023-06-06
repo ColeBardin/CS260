@@ -187,3 +187,7 @@ void printPrimHeap(Heap *myHeap) {
     }
     printf("\n");
 } /* Thanks! */
+
+void primHeapClear(Heap* myHeap) {
+    myHeap->currentSize = 0;
+}
