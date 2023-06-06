@@ -16,6 +16,7 @@
  */
 
 #include <stdio.h>
+#include "prim.h"
 
 int main(){
     char filename[64];
@@ -27,22 +28,16 @@ int main(){
         printf("ERROR: Could not read filename from STDIN\n");
         return -1;
     }
+    
 
     printf("Enter Starting Node:\n");
     if(scanf("%d", &startingNode) < 1){
         printf("ERROR: Could not read starting node from STDIN\n");
         return -2;
     }
-    printf("Running Prim's Algorithm\n");
-    printf("Input File: %s\n", filename);
-    printf("Starting Node: %d\n", startingNode);
 
-    if((file = fopen(filename, "r")) == NULL){
-        printf("ERROR: Could not open file: %s\n", filename);
-        return -3;
-    }
+    prim(filename, startingNode);
 
-    fclose(file);
     return 0;
 }
 
