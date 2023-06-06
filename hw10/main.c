@@ -1,0 +1,49 @@
+/**
+    @mainpage CS 260 - Homework 10
+    @section Description
+    This program implements Prim's algorithm to find the minimum spanning tree of a graph given a starting node
+ 
+ */
+
+/**
+    @file main.c
+    @author Cole Bardin <cab5721@drexel.edu>
+    @date June 06, 2023
+    @section DESCRIPTION
+    This file reads the user's input and implements Prims algorithm.
+    It asks the user for a filename that desribes the graph as well as a node to start.
+    Then, it uses Prims algorithm to find the MST of the graph.
+ */
+
+#include <stdio.h>
+
+int main(){
+    char filename[64];
+    int startingNode;
+    FILE *file;
+
+    printf("Enter File Containing Graph:\n");
+    if(scanf("%s", filename) < 1){
+        printf("ERROR: Could not read filename from STDIN\n");
+        return -1;
+    }
+
+    printf("Enter Starting Node:\n");
+    if(scanf("%d", &startingNode) < 1){
+        printf("ERROR: Could not read starting node from STDIN\n");
+        return -2;
+    }
+    printf("Running Prim's Algorithm\n");
+    printf("Input File: %s\n", filename);
+    printf("Starting Node: %d\n", startingNode);
+
+    if((file = fopen(filename, "r")) == NULL){
+        printf("ERROR: Could not open file: %s\n", filename);
+        return -3;
+    }
+
+    fclose(file);
+    return 0;
+}
+
+
