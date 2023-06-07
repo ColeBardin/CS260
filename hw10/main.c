@@ -36,7 +36,7 @@ int main() {
         return -2;
     }
 
-    /* Start prim algorithm */
+    /* Start Prim's algorithm */
     prim(filename, startingNode);
 
     return 0;

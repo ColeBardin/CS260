@@ -14,24 +14,24 @@
 /**
  * @brief Implements Prim's algorithm on a graph
  * 
- * @param filename describes number of nodes and edges
+ * @param filename location of text file that describes number of nodes and edges
  * @param startingNode node to start algorithm at
  */
 void prim(char *filename, int startingNode);
 
 /**
- * @brief Allocates a size x size matrix of integers
+ * @brief Allocates a size x size array of integers
  * 
- * @param size width and length of sqaure matrix
+ * @param size desired size of square matrix
  * @return int** valid pointer to matrix, NULL on failure
  */
 int **makeAdjMatrix(int size);
 
 /**
- * @brief Frees memory of the adjacency matrix
+ * @brief Frees memory of an allocated size x size matrix
  * 
  * @param A adjacency matrix
- * @param size width or length of adjacency matrix
+ * @param size size of square matrix
  */
 void deleteAdjMatrix(int **A, int size);
 

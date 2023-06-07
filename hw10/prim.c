@@ -30,7 +30,9 @@ void prim(char *filename, int startingNode) {
     int numNodes;
     /* Get the number of expected nodes from the file */
     if(fscanf(file, "%d", &numNodes) < 1){
+        /* If fscanf fails to read number from first line, close file and return */
         printf("ERROR: Failed reading number of nodes from file: %s\n", filename);
+        fclose(file);
         return;
     }
 
@@ -43,63 +45,67 @@ void prim(char *filename, int startingNode) {
         return;
     }
     
-    int fromNode, toNode, weight;
-    /* Add all edges into adj matrix */
+    int fromNode, toNode, weight; /* Variables to hold information about each edge while being read from file */
+    /* Add all edges from file to Adjacency Matrix */
     while(fscanf(file, "%d %d %d", &fromNode, &toNode, &weight) > 0){
         adjMatrix[fromNode][toNode] = weight;
         adjMatrix[toNode][fromNode] = weight;
     }
+    /* File is no longer needed */
     fclose(file);
 
     /* Create Heap for sorting bridging edges */
-    Heap *heap = newPrimHeap(numNodes*numNodes);
-    if(heap == NULL){
-        /* If Heap init fails, free adj matrix and return */
+    Heap *bridgingEdgesHeap = newPrimHeap(numNodes*numNodes);
+    if(bridgingEdgesHeap == NULL){
+        /* If Heap init fails, free Adjacency Matrix and return */
         printf("ERROR: Failed to allocate memory for heap\n");
         deleteAdjMatrix(adjMatrix, numNodes);
         return;
     }
 
     /* Create LinkedList for tracking nodes in the MST */
-    LinkedList *MSTNodes = newLinkedList();
-    if(MSTNodes == NULL){
-        /* If LinkedList init fails, free adj matrix, free heap, and return */
+    LinkedList *nodesInMST = newLinkedList();
+    if(nodesInMST == NULL){
+        /* If LinkedList init fails, free Adjacency Matrix, free Heap, and return */
         printf("ERROR: Failed to initialize LinkedList\n");
         deleteAdjMatrix(adjMatrix, numNodes);
-        deletePrimHeap(heap);
+        deletePrimHeap(bridgingEdgesHeap);
         return;
     }
 
     /* Add user given starting node to MST */
-    linkedListInsert(startingNode, MSTNodes);    
+    linkedListInsert(startingNode, nodesInMST);    
 
-    int totalWeight = 0;
+    int totalWeight = 0; /* Tracks the total weight of the MST edges */
+
     /* Repeat until all nodes are in the MST */
-    while(lengthLinkedList(MSTNodes) != numNodes){
-        /* Put bridging nodes into Heap */
-        findBridgingNodes(heap, MSTNodes, numNodes, adjMatrix);
+    while(lengthLinkedList(nodesInMST) != numNodes){
+        /* Find bridging nodes and place them into Heap */
+        findBridgingNodes(bridgingEdgesHeap, nodesInMST, numNodes, adjMatrix);
 
-        /* Get smallest weighted bridging edge from Heap */
-        fromNode = heap->data[0]->nodeA;
-        toNode = heap->data[0]->nodeB;
-        weight = heap->data[0]->weight;
+        /* Get smallest weighted bridging edge from Heap, which is the first element */
+        fromNode = bridgingEdgesHeap->data[0]->nodeA;
+        toNode = bridgingEdgesHeap->data[0]->nodeB;
+        weight = bridgingEdgesHeap->data[0]->weight;
 
         /* Print out newly added Node and the Edge used */
         printf("Added %d\n", toNode);
+        /* Printing format: (smallerEdgeName, largerEdgeName) edgeWeight*/
         printf("Using Edge (%d, %d) with weight %d\n", toNode > fromNode ? fromNode : toNode, toNode > fromNode ? toNode : fromNode, weight);
 
-        /* Add new Node to MST */
-        linkedListInsert(toNode, MSTNodes);
-        /* Track weight of MST */
+        /* Add new Node to MST Node Linked List*/
+        linkedListInsert(toNode, nodesInMST);
+        /* Track weight of new edge being added to MST */
         totalWeight += weight;
     }
 
+    /* Display MST total weight */
     printf("Total Weight: %d\n", totalWeight);
 
     /* Free all memory used in data structures */
-    deletePrimHeap(heap);
+    deletePrimHeap(bridgingEdgesHeap);
     deleteAdjMatrix(adjMatrix, numNodes);
-    deleteLinkedList(MSTNodes);
+    deleteLinkedList(nodesInMST);
 }
 
 int **makeAdjMatrix(int size) {
@@ -113,14 +119,14 @@ int **makeAdjMatrix(int size) {
     for(int i = 0; i < size; i++){
         new[i] = malloc(sizeof(int) * size);
         if(new[i] == NULL){
-            /* If any malloc fails, free all memory*/
+            /* If any malloc fails, free memory used for successful calls */
             for(int j = 0; j < i; j++){
                 free(new[j]);
             }
             free(new);
             return NULL;
         }
-        /* Set default value to be -1 */
+        /* Set default value to be -1 for all cells */
         for(int j = 0; j < i; j++){
             new[i][j] = -1;
         }
@@ -155,7 +161,7 @@ void findBridgingNodes(Heap *destHeap, LinkedList *MST, int numNodes, int **adjM
                     /* If j is in MST and i is not, insert edge */
                     primHeapInsert(j, i, adjMatrix[i][j], destHeap);
                 }
-                /* Insertions are ordered such that nodeA is node in MST, and nodeB is new node (within Edge struct) */
+                /* Insertions are ordered such that nodeA is node in MST, and nodeB is new node (within Edge struct members) */
             }
         }
     }
